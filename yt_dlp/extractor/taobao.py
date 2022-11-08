@@ -250,11 +250,14 @@ class Ali1688IE(InfoExtractor):
         y = json.loads(shopjs)
         #urlthumb = y["data"]["5908930030501"]["data"]["offerImgList"]
         urlthumb = []
+        detailurl = []
         for key, value in y["data"].items():
             if 'componentType' not in value:
                 continue
             if value.get('data', {}).get('offerImgList'):
                 urlthumb = value['data']['offerImgList']
+            if value.get('data', {}).get('detailUrl'):
+                detailurl = value['data']['detailUrl'] 
 # print('offerImgList', offerImgList)
         #urlthumb = self._search_regex(
         #    r'"offerImgList"\s*:\s*(?P<urlthumb>\["?\S+\"\])',
@@ -271,14 +274,15 @@ class Ali1688IE(InfoExtractor):
         #print(title)
         imgprob = str(y["globalData"]["skuModel"]["skuProps"])
         #print(imgprob)
-        imgproblst = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))',imgprob)
-        imgproblst.sort()
-        #print(imgproblst)
-        for image in imgproblst:
-            thumb.append({
-                'url': 'https://' +image[0],
-                })
-        detailurl = (str(y["data"]["590893002100"]["data"]["detailUrl"]))
+        if imgprob is not None:
+            imgproblst = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))',imgprob)
+            imgproblst.sort()
+            #print(imgproblst)
+            for image in imgproblst:
+                thumb.append({
+                    'url': 'https://' +image[0],
+                    })    
+        #detailurl = (str(y["data"]["590893002100"]["data"]["detailUrl"]))
         #print(detailurl)
         if detailurl is not None:
         #    print(detailurl)
