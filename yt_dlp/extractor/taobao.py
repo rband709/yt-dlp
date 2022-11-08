@@ -269,12 +269,11 @@ class Ali1688IE(InfoExtractor):
             thumb.append({
                 'url': urlthumb[i],
                 })
-        #print(thumb)        
+     
         title = self._search_regex(r'<title>([^<]+)<', webpage, 'title')
-        #print(title)
-        imgprob = str(y["globalData"]["skuModel"]["skuProps"])
-        #print(imgprob)
-        if imgprob is not None:
+        
+        if "skuProps" in y:
+            imgprob = str(y["globalData"]["skuModel"]["skuProps"])
             imgproblst = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))',imgprob)
             imgproblst.sort()
             #print(imgproblst)
