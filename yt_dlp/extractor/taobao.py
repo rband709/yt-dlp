@@ -263,6 +263,7 @@ class Ali1688IE(InfoExtractor):
         #    r'"offerImgList"\s*:\s*(?P<urlthumb>\["?\S+\"\])',
         #    webpage, 'imglist')
         #print(urlthumb)
+        #print(detailurl)
         thumb = []
         #listthumb = json.loads(urlthumb)
         for i in range(len(urlthumb)):
@@ -272,10 +273,11 @@ class Ali1688IE(InfoExtractor):
      
         title = self._search_regex(r'<title>([^<]+)<', webpage, 'title')
         
-        if "skuProps" in y:
+        if "skuProps" in y["globalData"]["skuModel"]:
             imgprob = str(y["globalData"]["skuModel"]["skuProps"])
             imgproblst = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))',imgprob)
             imgproblst.sort()
+            #print("sku")
             #print(imgproblst)
             for image in imgproblst:
                 thumb.append({
@@ -285,7 +287,7 @@ class Ali1688IE(InfoExtractor):
         #print(detailurl)
         if detailurl is not None:
         #    print(detailurl)
-            webpage2 = str(self._download_webpage_handle(url, pid))
+            webpage2 = str(self._download_webpage_handle(detailurl, pid))
             detailimglst = re.findall(r'((cbu01|img)\.alicdn\.com\/img.*?\.(jpg|png))',webpage2)
         #    print(detailimglst)
             detailimglst.sort()
