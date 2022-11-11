@@ -178,7 +178,7 @@ class TaobaoWorldIE(InfoExtractor):
             webpage, 'shop JS', default=None)
         y = json.loads(shopjs)
         price = y["pageInitialProps"]["httpData"]["normalItemResponse"]["itemPrice"]["promotionPrice"]
-        fullinfo = f"Tên sản phẩm: {title} - Giá bán: {price} tệ"
+        fulltitle = f"{title} - Giá bán: {price} tệ"
         htmldesc = y["pageInitialProps"]["httpData"]["normalItemResponse"]["itemDesc"]
         imgdesc = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))',htmldesc)
         imgdesc.sort()
@@ -207,9 +207,8 @@ class TaobaoWorldIE(InfoExtractor):
             # I have no idea what these params mean but it at least seems to work
             'url': videoURL,
             'id': uid,
-            'title': title,
+            'title': fulltitle,
             'thumbnails': new_finalthumb,
-            'description': fullinfo,
         }
 class Ali1688IE(InfoExtractor):
     IE_NAME = 'ali1688:product'
