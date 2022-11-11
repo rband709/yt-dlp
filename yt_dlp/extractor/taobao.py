@@ -166,6 +166,7 @@ class TaobaoWorldIE(InfoExtractor):
             r'"images"\s*:\s*(?P<urlthumb>"?\S+\"\])',
             webpage, 'imglist', default=None)
         title = self._search_regex(r'<title>([^<]+)<', webpage, 'title')
+        
         thumb = []
         listthumb = json.loads(urlthumb)
         for i in range(len(listthumb)):
@@ -176,6 +177,8 @@ class TaobaoWorldIE(InfoExtractor):
             r'window\.\_\_INITIAL\_DATA\_\_\=(.*}}})',
             webpage, 'shop JS', default=None)
         y = json.loads(shopjs)
+        price = y["pageInitialProps"]["httpData"]["normalItemResponse"]["itemPrice"]["promotionPrice"]
+        fullinfo = f"Tên sản phẩm: {title} - Giá bán: {price} tệ"
         htmldesc = y["pageInitialProps"]["httpData"]["normalItemResponse"]["itemDesc"]
         imgdesc = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))',htmldesc)
         imgdesc.sort()
@@ -206,6 +209,7 @@ class TaobaoWorldIE(InfoExtractor):
             'id': uid,
             'title': title,
             'thumbnails': new_finalthumb,
+            'description': fullinfo,
         }
 class Ali1688IE(InfoExtractor):
     IE_NAME = 'ali1688:product'
