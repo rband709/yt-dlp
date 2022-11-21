@@ -4,9 +4,9 @@ import json
 import re
 import ast
 from ..utils import (
-#    int_or_none,
-#    #js_to_json,
-#    #mimetype2ext,
+    # int_or_none,
+    # js_to_json,
+    # mimetype2ext,
     ExtractorError,
 )
 
@@ -199,8 +199,8 @@ class TaobaoWorldIE(InfoExtractor):
                 thumb.append({
                     'url': 'https://' + image[0],
                 })
-        #pageInitialProps►httpData►normalItemResponse►itemSkuDO►skuPropertyList►1►propertyValues►
-        #print(thumb)
+        # pageInitialProps►httpData►normalItemResponse►itemSkuDO►skuPropertyList►1►propertyValues►
+        # print(thumb)
         seen = set()
         new_finalthumb = []
         for d in thumb:
@@ -241,12 +241,12 @@ class Ali1688IE(InfoExtractor):
         pid = self._match_id(url)
         webpage, urlh = self._download_webpage_handle(url, pid)
         visitor_url = urlh.geturl()
-        #debug print('visitor url %s' % visitor_url)
+        # debug print('visitor url %s' % visitor_url)
         uid = self._search_regex(
             r'"videoId":(?P<uid>\d+)',
             webpage, 'video id')
         videoURL = ''
-        #debug print('uid is %s' % uid)
+        # debug print('uid is %s' % uid)
         if uid == '0':
             videoURL='http://bo.vutn.net/no-video.mp4'
         else:
@@ -256,9 +256,9 @@ class Ali1688IE(InfoExtractor):
         shopjs = self._search_regex(
             r'window\.\_\_INIT\_DATA\=(.*}]})',
             webpage, 'shop JS', default=None)
-        #print(shopjs)
+        # print(shopjs)
         y = json.loads(shopjs)
-        #urlthumb = y["data"]["5908930030501"]["data"]["offerImgList"]
+        # urlthumb = y["data"]["5908930030501"]["data"]["offerImgList"]
         urlthumb = []
         detailurl = []
         for key, value in y["data"].items():
@@ -268,14 +268,14 @@ class Ali1688IE(InfoExtractor):
                 urlthumb = value['data']['offerImgList']
             if value.get('data', {}).get('detailUrl'):
                 detailurl = value['data']['detailUrl'] 
-# print('offerImgList', offerImgList)
-        #urlthumb = self._search_regex(
+        # print('offerImgList', offerImgList)
+        # urlthumb = self._search_regex(
         #    r'"offerImgList"\s*:\s*(?P<urlthumb>\["?\S+\"\])',
         #    webpage, 'imglist')
-        #print(urlthumb)
-        #print(detailurl)
+        # print(urlthumb)
+        # print(detailurl)
         thumb = []
-        #listthumb = json.loads(urlthumb)
+        # listthumb = json.loads(urlthumb)
         for i in range(len(urlthumb)):
             thumb.append({
                 'url': urlthumb[i],
@@ -287,14 +287,14 @@ class Ali1688IE(InfoExtractor):
             imgprob = str(y["globalData"]["skuModel"]["skuProps"])
             imgproblst = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))',imgprob)
             imgproblst.sort()
-            #print("sku")
-            #print(imgproblst)
+            # print("sku")
+            # print(imgproblst)
             for image in imgproblst:
                 thumb.append({
                     'url': 'https://' + image[0],
                 })    
-        #detailurl = (str(y["data"]["590893002100"]["data"]["detailUrl"]))
-        #print(detailurl)
+        # detailurl = (str(y["data"]["590893002100"]["data"]["detailUrl"]))
+        # print(detailurl)
         if detailurl is not None:
         #    print(detailurl)
             webpage2 = str(self._download_webpage_handle(detailurl, pid))
@@ -302,19 +302,19 @@ class Ali1688IE(InfoExtractor):
         #    print(detailimglst)
             detailimglst.sort()
             detailimglst1 = list(dict.fromkeys(detailimglst))
-            #print(detailimglst1)
+            # print(detailimglst1)
             for image in detailimglst:
                 thumb.append({
                     'url': 'https://' + image[0],
                 })
             
-            #print(detailimglst)
+            # print(detailimglst)
         thumblstnew = str(thumb)
-        #print(thumblstnew)
+        # print(thumblstnew)
         prethumb = re.sub(r'(\.(?:[-_]?\d{2,4}x\d{2,4})+\.)|(.summ.)|(.search.)', '.', thumblstnew)
        
         finalthumb = ast.literal_eval(prethumb)
-        #print(finalthumb)
+        # print(finalthumb)
         seen = set()
         new_finalthumb = []
         for d in finalthumb:
@@ -322,8 +322,8 @@ class Ali1688IE(InfoExtractor):
             if t not in seen:
                 seen.add(t)
                 new_finalthumb.append(d)
-        #print(new_finalthumb)
-        #thumb = [w.replace('(?:[-_]?[0-9]+x[0-9]+)+', '') for w in thumb]
+        # print(new_finalthumb)
+        # thumb = [w.replace('(?:[-_]?[0-9]+x[0-9]+)+', '') for w in thumb]
         return {
             # I have no idea what these params mean but it at least seems to work
             'url': videoURL,
