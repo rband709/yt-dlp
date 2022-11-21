@@ -105,7 +105,7 @@ class TaobaoIE(InfoExtractor):
                     for i in range(len(value)):
                         thumb.append({
                             'url': value[i],
-                            })
+                        })
                 else:
                     thumb.append({
                         'url': value[0],
@@ -172,13 +172,12 @@ class TaobaoWorldIE(InfoExtractor):
             r'"images"\s*:\s*(?P<urlthumb>"?\S+\"\])',
             webpage, 'imglist', default=None)
         title = self._search_regex(r'<title>([^<]+)<', webpage, 'title')
-        
         thumb = []
         listthumb = json.loads(urlthumb)
         for i in range(len(listthumb)):
             thumb.append({
                 'url': listthumb[i],
-                })
+            })
         shopjs = self._search_regex(
             r'window\.\_\_INITIAL\_DATA\_\_\=(.*}}})',
             webpage, 'shop JS', default=None)
@@ -186,7 +185,7 @@ class TaobaoWorldIE(InfoExtractor):
         price = y["pageInitialProps"]["httpData"]["normalItemResponse"]["itemPrice"]["promotionPrice"]
         fulltitle = f"{title} - Giá bán: {price} tệ"
         htmldesc = y["pageInitialProps"]["httpData"]["normalItemResponse"]["itemDesc"]
-        imgdesc = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))',htmldesc)
+        imgdesc = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))', htmldesc)
         imgdesc.sort()
         for image in imgdesc:
             thumb.append({
@@ -194,7 +193,7 @@ class TaobaoWorldIE(InfoExtractor):
                 })
         probimg = str(y["pageInitialProps"]["httpData"]["normalItemResponse"]["itemSkuDO"]["skuPropertyList"])
         if probimg is not None:
-            probimglst = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))',probimg)
+            probimglst = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))', probimg)
             probimglst.sort()
             for image in probimglst:
                 thumb.append({
@@ -280,7 +279,7 @@ class Ali1688IE(InfoExtractor):
         for i in range(len(urlthumb)):
             thumb.append({
                 'url': urlthumb[i],
-                })
+            })
      
         title = self._search_regex(r'<title>([^<]+)<', webpage, 'title')
         
@@ -293,7 +292,7 @@ class Ali1688IE(InfoExtractor):
             for image in imgproblst:
                 thumb.append({
                     'url': 'https://' +image[0],
-                    })    
+                })    
         #detailurl = (str(y["data"]["590893002100"]["data"]["detailUrl"]))
         #print(detailurl)
         if detailurl is not None:
@@ -307,7 +306,7 @@ class Ali1688IE(InfoExtractor):
             for image in detailimglst:
                 thumb.append({
                     'url': 'https://' +image[0],
-                    })
+                })
             
             #print(detailimglst)
         thumblstnew = str(thumb)
