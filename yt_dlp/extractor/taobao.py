@@ -240,7 +240,7 @@ class Ali1688IE(InfoExtractor):
     def _real_extract(self, url):
         pid = self._match_id(url)
         webpage, urlh = self._download_webpage_handle(url, pid)
-        visitor_url = urlh.geturl()
+        # visitor_url = urlh.geturl()
         # debug print('visitor url %s' % visitor_url)
         uid = self._search_regex(
             r'"videoId":(?P<uid>\d+)',
@@ -248,11 +248,11 @@ class Ali1688IE(InfoExtractor):
         videoURL = ''
         # debug print('uid is %s' % uid)
         if uid == '0':
-            videoURL='http://bo.vutn.net/no-video.mp4'
+            videoURL = 'http://bo.vutn.net/no-video.mp4'
         else:
             videoURL = self._search_regex(
-            r'"videoUrl":"(?P<videoUrl>.+?)"',
-            webpage, 'video url', default=None)
+                r'"videoUrl":"(?P<videoUrl>.+?)"',
+                webpage, 'video url', default=None)
         shopjs = self._search_regex(
             r'window\.\_\_INIT\_DATA\=(.*}]})',
             webpage, 'shop JS', default=None)
@@ -267,7 +267,7 @@ class Ali1688IE(InfoExtractor):
             if value.get('data', {}).get('offerImgList'):
                 urlthumb = value['data']['offerImgList']
             if value.get('data', {}).get('detailUrl'):
-                detailurl = value['data']['detailUrl'] 
+                detailurl = value['data']['detailUrl']
         # print('offerImgList', offerImgList)
         # urlthumb = self._search_regex(
         #    r'"offerImgList"\s*:\s*(?P<urlthumb>\["?\S+\"\])',
@@ -280,26 +280,24 @@ class Ali1688IE(InfoExtractor):
             thumb.append({
                 'url': urlthumb[i],
             })
-     
         title = self._search_regex(r'<title>([^<]+)<', webpage, 'title')
-        
         if "skuProps" in y["globalData"]["skuModel"]:
             imgprob = str(y["globalData"]["skuModel"]["skuProps"])
-            imgproblst = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))',imgprob)
+            imgproblst = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))', imgprob)
             imgproblst.sort()
             # print("sku")
             # print(imgproblst)
             for image in imgproblst:
                 thumb.append({
                     'url': 'https://' + image[0],
-                })    
+                })
         # detailurl = (str(y["data"]["590893002100"]["data"]["detailUrl"]))
         # print(detailurl)
         if detailurl is not None:
-        #    print(detailurl)
+            # print(detailurl)
             webpage2 = str(self._download_webpage_handle(detailurl, pid))
-            detailimglst = re.findall(r'((cbu01|img)\.alicdn\.com\/img.*?\.(jpg|png))',webpage2)
-        #    print(detailimglst)
+            detailimglst = re.findall(r'((cbu01|img)\.alicdn\.com\/img.*?\.(jpg|png))', webpage2)
+            # print(detailimglst)
             detailimglst.sort()
             detailimglst1 = list(dict.fromkeys(detailimglst))
             # print(detailimglst1)
