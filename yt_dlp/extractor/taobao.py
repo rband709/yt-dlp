@@ -4,9 +4,9 @@ import json
 import re
 import ast
 from ..utils import (
-    #int_or_none,
-    #js_to_json,
-    #mimetype2ext,
+#    int_or_none,
+#    #js_to_json,
+#    #mimetype2ext,
     ExtractorError,
 )
 
@@ -57,8 +57,8 @@ class TmallIE(InfoExtractor):
             'id': vid,
             'title': title,
         }
-    
-    
+
+
 class TaobaoIE(InfoExtractor):
     IE_NAME = 'taobao:product'
     _VALID_URL = r'https?:\/\/(?:(?:www|[a-z]{2})\.)?item\.taobao\.com\/.*?id\=(?P<id>\d+)'
@@ -104,8 +104,8 @@ class TaobaoIE(InfoExtractor):
                 if key in "default":
                     for i in range(len(value)):
                         thumb.append({
-                        'url': value[i],
-                        })
+                            'url': value[i],
+                            })
                 else:
                     thumb.append({
                         'url': value[0],
@@ -113,11 +113,11 @@ class TaobaoIE(InfoExtractor):
             title = self._search_regex(r'<title>([^<]+)<', webpage, 'title')
         elif 'item.taobao.com' in visitor_url:
             vid = self._search_regex(
-            r'"videoId"\s*:\s*"?(\d+)"?',
-            webpage, 'video id')
+                r'"videoId"\s*:\s*"?(\d+)"?',
+                webpage, 'video id')
             uid = self._search_regex(
-            r'"videoOwnerId"\s*:\s*"?(?P<uid>\d+)"?',
-            webpage, 'video uid')
+                r'"videoOwnerId"\s*:\s*"?(?P<uid>\d+)"?',
+                webpage, 'video uid')
             title = self._search_regex(r'<title>([^<]+)<', webpage, 'title')
         return {
             # I have no idea what these params mean but it at least seems to work
@@ -126,6 +126,8 @@ class TaobaoIE(InfoExtractor):
             'title': title,
             'thumbnails': thumb,
         }
+
+
 class TaobaoWorldIE(InfoExtractor):
     IE_NAME = 'taobaoworld:product'
     _VALID_URL = r'https?:\/\/(?:(?:www|[a-z]{2})\.)?world\.taobao\.com\/item\/(?P<id>\d+)\.htm'
@@ -158,7 +160,7 @@ class TaobaoWorldIE(InfoExtractor):
             r'"videoUrl"\s*:\s*"?(\S+)"}',
             webpage, 'video url', default=None)
         if not videoURL:
-            videoURL='http://bo.vutn.net/no-video.mp4'
+            videoURL = 'http://bo.vutn.net/no-video.mp4'
         uid = self._search_regex(
             r'"userId"\s*:\s*"?(?P<uid>\d+)"?',
             webpage, 'user id', default=None)
@@ -214,6 +216,8 @@ class TaobaoWorldIE(InfoExtractor):
             'title': fulltitle,
             'thumbnails': new_finalthumb,
         }
+
+
 class Ali1688IE(InfoExtractor):
     IE_NAME = 'ali1688:product'
     _VALID_URL = r'https?:\/\/(?:(?:www|[a-z]{2})\.)?(?:detail|m)\.1688\.com\/offer\/(?P<id>\d+)\.html'
