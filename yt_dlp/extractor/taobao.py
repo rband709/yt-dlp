@@ -299,18 +299,16 @@ class Ali1688IE(InfoExtractor):
             detailimglst = re.findall(r'((cbu01|img)\.alicdn\.com\/img.*?\.(jpg|png))', webpage2)
             # print(detailimglst)
             detailimglst.sort()
-            detailimglst1 = list(dict.fromkeys(detailimglst))
+            # detailimglst1 = list(dict.fromkeys(detailimglst))
             # print(detailimglst1)
             for image in detailimglst:
                 thumb.append({
                     'url': 'https://' + image[0],
                 })
-            
             # print(detailimglst)
         thumblstnew = str(thumb)
         # print(thumblstnew)
         prethumb = re.sub(r'(\.(?:[-_]?\d{2,4}x\d{2,4})+\.)|(.summ.)|(.search.)', '.', thumblstnew)
-       
         finalthumb = ast.literal_eval(prethumb)
         # print(finalthumb)
         seen = set()
