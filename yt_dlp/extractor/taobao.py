@@ -189,16 +189,16 @@ class TaobaoWorldIE(InfoExtractor):
         imgdesc.sort()
         for image in imgdesc:
             thumb.append({
-                'url': 'https://' +image[0],
-                })
+                'url': 'https://' + image[0],
+            })
         probimg = str(y["pageInitialProps"]["httpData"]["normalItemResponse"]["itemSkuDO"]["skuPropertyList"])
         if probimg is not None:
             probimglst = re.findall(r'((img|cbu01)\.alicdn\.com.*?\.(jpg|png))', probimg)
             probimglst.sort()
             for image in probimglst:
                 thumb.append({
-                    'url': 'https://' +image[0],
-                    })
+                    'url': 'https://' + image[0],
+                })
         #pageInitialProps►httpData►normalItemResponse►itemSkuDO►skuPropertyList►1►propertyValues►
         #print(thumb)
         seen = set()
@@ -291,7 +291,7 @@ class Ali1688IE(InfoExtractor):
             #print(imgproblst)
             for image in imgproblst:
                 thumb.append({
-                    'url': 'https://' +image[0],
+                    'url': 'https://' + image[0],
                 })    
         #detailurl = (str(y["data"]["590893002100"]["data"]["detailUrl"]))
         #print(detailurl)
@@ -305,7 +305,7 @@ class Ali1688IE(InfoExtractor):
             #print(detailimglst1)
             for image in detailimglst:
                 thumb.append({
-                    'url': 'https://' +image[0],
+                    'url': 'https://' + image[0],
                 })
             
             #print(detailimglst)
