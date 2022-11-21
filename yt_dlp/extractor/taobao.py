@@ -4,11 +4,13 @@ import json
 import re
 import ast
 from ..utils import (
-    int_or_none,
-    js_to_json,
-    mimetype2ext,
+    #int_or_none,
+    #js_to_json,
+    #mimetype2ext,
     ExtractorError,
 )
+
+
 class TmallIE(InfoExtractor):
     IE_NAME = 'tmall:product'
     _VALID_URL = r'https?:\/\/(?:(?:www|[a-z]{2})\.)?detail\.tmall\.com\/.*?id\=(?P<id>\d+)'
@@ -43,11 +45,11 @@ class TmallIE(InfoExtractor):
             title = self._search_regex(r'<title>([^<]+)<', webpage, 'title')
         elif 'item.taobao.com' in visitor_url:
             vid = self._search_regex(
-            r'"videoId"\s*:\s*"?(\d+)"?',
-            webpage, 'video id')
+                r'"videoId"\s*:\s*"?(\d+)"?',
+                webpage, 'video id')
             uid = self._search_regex(
-            r'"videoOwnerId"\s*:\s*"?(?P<uid>\d+)"?',
-            webpage, 'video uid')
+                r'"videoOwnerId"\s*:\s*"?(?P<uid>\d+)"?',
+                webpage, 'video uid')
             title = self._search_regex(r'<title>([^<]+)<', webpage, 'title')
         return {
             # I have no idea what these params mean but it at least seems to work
@@ -55,6 +57,8 @@ class TmallIE(InfoExtractor):
             'id': vid,
             'title': title,
         }
+    
+    
 class TaobaoIE(InfoExtractor):
     IE_NAME = 'taobao:product'
     _VALID_URL = r'https?:\/\/(?:(?:www|[a-z]{2})\.)?item\.taobao\.com\/.*?id\=(?P<id>\d+)'
