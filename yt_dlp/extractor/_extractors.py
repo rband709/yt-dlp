@@ -2102,6 +2102,7 @@ from .vimeo import (
     VimeoGroupsIE,
     VimeoLikesIE,
     VimeoOndemandIE,
+    VimeoProIE,
     VimeoReviewIE,
     VimeoUserIE,
     VimeoWatchLaterIE,
